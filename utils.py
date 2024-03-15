@@ -59,11 +59,18 @@ def load_experiment(experiment_name, checkpoint_name="model_final.pt", base_dir=
     return config, model, train_losses, test_losses, accuracies
 
 
-def visualize_images():
-    trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
-                                            download=True)
-    classes = ('plane', 'car', 'bird', 'cat',
-            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+def visualize_images(dataset):
+    if dataset = 'CIFAR10':
+        trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
+                                                download=True)
+        classes = ('plane', 'car', 'bird', 'cat',
+                'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+
+    elif dataset = 'MNIST':
+        trainset = torchvision.datasets.MNIST(root='./data', train=True,
+                                                download=True)
+        classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
+
     # Pick 30 samples randomly
     indices = torch.randperm(len(trainset))[:30]
     images = [np.asarray(trainset[i][0]) for i in indices]
