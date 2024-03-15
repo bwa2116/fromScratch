@@ -51,7 +51,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
         transforms.Resize((28, 28)),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomResizedCrop((28, 28), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        transforms.Normalize((0.5,), (0.5,))])
 
     trainset = torchvision.datasets.MNIST(root='../data', train=True,
                                             download=True, transform=train_transform)
@@ -68,7 +68,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize((28, 28)),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        transforms.Normalize((0.5,), (0.5,))])
 
     testset = torchvision.datasets.MNIST(root='../data', train=False,
                                         download=True, transform=test_transform)
