@@ -91,9 +91,11 @@ def visualize_attention(model, output=None, device="cuda"):
     model.eval()
     # Load random images
     num_images = 30
-    testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True)
-    classes = ('plane', 'car', 'bird', 'cat',
-            'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+    if dataset == 'CIFAR10':
+        testset = torchvision.datasets.CIFAR10(root='./data', train=False, download=True)
+        classes = ('plane', 'car', 'bird', 'cat',
+                'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
+        image_size = (32,32)
     # Pick 30 samples randomly
     indices = torch.randperm(len(testset))[:num_images]
     raw_images = [np.asarray(testset[i][0]) for i in indices]
@@ -101,7 +103,7 @@ def visualize_attention(model, output=None, device="cuda"):
     # Convert the images to tensors
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
-        transforms.Resize((32, 32)),
+        transforms.Resize(image_size),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
     images = torch.stack([test_transform(image) for image in raw_images])
     # Move the images to the device
@@ -123,17 +125,17 @@ def visualize_attention(model, output=None, device="cuda"):
     attention_maps = attention_maps.view(-1, size, size)
     # Resize the map to the size of the image
     attention_maps = attention_maps.unsqueeze(1)
-    attention_maps = F.interpolate(attention_maps, size=(32, 32), mode='bilinear', align_corners=False)
+    attention_maps = F.interpolate(attention_maps, size=image_size, mode='bilinear', align_corners=False)
     attention_maps = attention_maps.squeeze(1)
     # Plot the images and the attention maps
     fig = plt.figure(figsize=(20, 10))
-    mask = np.concatenate([np.ones((32, 32)), np.zeros((32, 32))], axis=1)
+    mask = np.concatenate([np.ones(image_size), np.zeros(image_size)], axis=1)
     for i in range(num_images):
         ax = fig.add_subplot(6, 5, i+1, xticks=[], yticks=[])
         img = np.concatenate((raw_images[i], raw_images[i]), axis=1)
         ax.imshow(img)
         # Mask out the attention map of the left image
-        extended_attention_map = np.concatenate((np.zeros((32, 32)), attention_maps[i].cpu()), axis=1)
+        extended_attention_map = np.concatenate((np.zeros(image_size), attention_maps[i].cpu()), axis=1)
         extended_attention_map = np.ma.masked_where(mask==1, extended_attention_map)
         ax.imshow(extended_attention_map, alpha=0.5, cmap='jet')
         # Show the ground truth and the prediction
