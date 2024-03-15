@@ -7,7 +7,7 @@ attention_probs_dropout_prob = 0.0
 initializer_range = 0.02
 
 config_CIFAR10 = {
-    "patch_size": patch_size4,
+    "patch_size": patch_size,
     "hidden_size": hidden_size,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
