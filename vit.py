@@ -33,7 +33,11 @@ class PatchEmbeddings(nn.Module):
         self.projection = nn.Conv2d(self.num_channels, self.hidden_size, kernel_size=self.patch_size, stride=self.patch_size)
 
     def forward(self, x):
-        # (batch_size, num_channels, image_size, image_size) -> (batch_size, num_patches, hidden_size)
+        # If input has a single channel (grayscale), convert it to three channels (RGB)
+        if x.size(1) == 1:
+            x = x.repeat(1, 3, 1, 1)  # Repeat single channel thrice to match the expected RGB input
+        
+        # (batch_size, num_channels, image_size, image_size) -> (batch_size, hidden_size, num_patches)
         x = self.projection(x)
         x = x.flatten(2).transpose(1, 2)
         return x
