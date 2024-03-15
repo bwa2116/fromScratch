@@ -98,7 +98,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
                 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
         image_size = (32,32)
     elif dataset == 'MNIST':
-        trainset = torchvision.datasets.MNIST(root='./data', train=True,
+        testset = torchvision.datasets.MNIST(root='./data', train=True,
                                                 download=True)
         classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
         image_size = (28,28)
