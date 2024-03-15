@@ -49,6 +49,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize((28, 28)),
+        transforms.Grayscale(num_output_channels=3),  # Convert to RGB by replicating channels
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomResizedCrop((28, 28), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
         transforms.Normalize((0.5,), (0.5,))])
