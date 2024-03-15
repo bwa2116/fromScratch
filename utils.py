@@ -97,17 +97,26 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         classes = ('plane', 'car', 'bird', 'cat',
                 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
         image_size = (32,32)
+        # Pick 30 samples randomly
+        indices = torch.randperm(len(testset))[:num_images]
+        raw_images = [np.asarray(testset[i][0]) for i in indices]
+        labels = [testset[i][1] for i in indices]
         # Convert the images to tensors
         test_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize(image_size),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
         images = torch.stack([test_transform(image) for image in raw_images])
+   
     elif dataset == 'MNIST':
         testset = torchvision.datasets.MNIST(root='./data', train=True,
                                                 download=True)
         classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
         image_size = (28,28)
+        # Pick 30 samples randomly
+        indices = torch.randperm(len(testset))[:num_images]
+        raw_images = [np.asarray(testset[i][0]) for i in indices]
+        labels = [testset[i][1] for i in indices]
         # Convert the images to tensors
         test_transform = transforms.Compose(
         [transforms.ToTensor(),
@@ -115,10 +124,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         transforms.Normalize((0.5,), (0.5,))])
         images = torch.stack([test_transform(image) for image in raw_images])
     
-    # Pick 30 samples randomly
-    indices = torch.randperm(len(testset))[:num_images]
-    raw_images = [np.asarray(testset[i][0]) for i in indices]
-    labels = [testset[i][1] for i in indices]
+
 
     # Move the images to the device
     images = images.to(device)
