@@ -84,7 +84,7 @@ def visualize_images(dataset):
 
 
 @torch.no_grad()
-def visualize_attention(model, output=None, device="cuda"):
+def visualize_attention(model, dataset, output=None, device="cuda"):
     """
     Visualize the attention maps of the first 4 images.
     """
