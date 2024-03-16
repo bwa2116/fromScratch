@@ -108,7 +108,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize((256, 256)),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
     testset = torchvision.datasets.Places365(root='./data', split='val', 
                                                   small= True, download= True)
