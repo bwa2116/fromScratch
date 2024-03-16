@@ -133,7 +133,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
     elif dataset == 'Places365':
         from places365classes import places365_classes
         testset = torchvision.datasets.Places365(root='./data', split='val', 
-                                                  small= True, download= False)
+                                                  small= True, download= True)
         classes = places365_classes
         image_size = (256,256)
         # Pick 30 samples randomly
