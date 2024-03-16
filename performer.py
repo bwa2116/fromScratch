@@ -13,10 +13,10 @@ class PerformerAttention(nn.Module):
     def forward(self, x):
         batch_size, seq_len, _ = x.size()
         random_features = self.random_features.unsqueeze(0)  # add batch dimension
-        attention_scores = torch.einsum('bqd,fd->bqf', [x, random_features])
+        attention_scores = torch.einsum('bqd,fd->bq', [x, random_features])
         attention_scores = attention_scores / (self.feature_dim ** 0.5)
         attention_weights = F.softmax(attention_scores, dim=1)
-        output = torch.einsum('bqf,bqv->bvf', [attention_weights, x])
+        output = torch.einsum('bq,bqv->bv', [attention_weights, x])
         return output
 
 class PatchEmbeddings(nn.Module):
