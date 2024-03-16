@@ -93,8 +93,8 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         transforms.RandomResizedCrop((256, 256), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    trainset = torchvision.datasets.Places365(root='../data', train=True,
-                                            download=True, transform=train_transform)
+    trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
+                                                  small= True, download= True)
     if train_sample_size is not None:
         # Randomly sample a subset of the training set
         indices = torch.randperm(len(trainset))[:train_sample_size]
