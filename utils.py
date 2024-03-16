@@ -72,7 +72,7 @@ def visualize_images(dataset):
         classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
 
     elif dataset == 'Places365':
-        import places365classes
+        from places365classes import places365_classes
         trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
                                                   small= True, download= True)
         classes = places365_classes
@@ -131,7 +131,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         images = torch.stack([test_transform(image) for image in raw_images])
     
     elif dataset == 'Places365':
-        import places365classes
+        from places365classes import places365_classes
         trainset = torchvision.datasets.Places365(root='./data', train=True,
                                                 download=True)
         classes = places365_classes
