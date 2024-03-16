@@ -144,7 +144,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         test_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize(image_size),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
         images = torch.stack([test_transform(image) for image in raw_images])
 
     # Move the images to the device
