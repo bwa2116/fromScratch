@@ -93,7 +93,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         transforms.RandomResizedCrop((256, 256), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    trainset = torchvision.datasets.CIFAR10(root='../data', train=True,
+    trainset = torchvision.datasets.Places365(root='../data', train=True,
                                             download=True, transform=train_transform)
     if train_sample_size is not None:
         # Randomly sample a subset of the training set
@@ -110,7 +110,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         transforms.Resize((256, 256)),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    testset = torchvision.datasets.CIFAR10(root='../data', train=False,
+    testset = torchvision.datasets.Places365(root='../data', train=False,
                                         download=True, transform=test_transform)
     if test_sample_size is not None:
         # Randomly sample a subset of the test set
@@ -120,5 +120,5 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
                                             shuffle=False, num_workers=num_workers)
     import places365classes
-    classes = places365classes
+    classes = places365_classes
     return trainloader, testloader, classes
