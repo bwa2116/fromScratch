@@ -91,7 +91,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         transforms.Resize((256, 256)),
         transforms.RandomHorizontalFlip(p=0.5),
         transforms.RandomResizedCrop((256, 256), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
     trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
                                                   small= True, download= True)
