@@ -130,22 +130,22 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         transforms.Normalize((0.5,), (0.5,))])
         images = torch.stack([test_transform(image) for image in raw_images])
     
-        elif dataset == 'Places365':
-            import places365classes
-            trainset = torchvision.datasets.Places365(root='./data', train=True,
-                                                    download=True)
-            classes = places365_classes
-            image_size = (256,256)
-            # Pick 30 samples randomly
-            indices = torch.randperm(len(testset))[:num_images]
-            raw_images = [np.asarray(testset[i][0]) for i in indices]
-            labels = [testset[i][1] for i in indices]
-            # Convert the images to tensors
-            test_transform = transforms.Compose(
-            [transforms.ToTensor(),
-            transforms.Resize(image_size),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-            images = torch.stack([test_transform(image) for image in raw_images])
+    elif dataset == 'Places365':
+        import places365classes
+        trainset = torchvision.datasets.Places365(root='./data', train=True,
+                                                download=True)
+        classes = places365_classes
+        image_size = (256,256)
+        # Pick 30 samples randomly
+        indices = torch.randperm(len(testset))[:num_images]
+        raw_images = [np.asarray(testset[i][0]) for i in indices]
+        labels = [testset[i][1] for i in indices]
+        # Convert the images to tensors
+        test_transform = transforms.Compose(
+        [transforms.ToTensor(),
+        transforms.Resize(image_size),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+        images = torch.stack([test_transform(image) for image in raw_images])
 
     # Move the images to the device
     images = images.to(device)
