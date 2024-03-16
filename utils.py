@@ -74,7 +74,7 @@ def visualize_images(dataset):
     elif dataset == 'Places365':
         import places365classes
         trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
-                                                  small= True, download= False)
+                                                  small= True, download= True)
         classes = places365_classes
 
     # Pick 30 samples randomly
