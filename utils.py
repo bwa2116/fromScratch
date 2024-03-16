@@ -115,7 +115,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         images = torch.stack([test_transform(image) for image in raw_images])
    
     elif dataset == 'MNIST':
-        testset = torchvision.datasets.MNIST(root='./data', train=True,
+        testset = torchvision.datasets.MNIST(root='./data', train=False,
                                                 download=True)
         classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
         image_size = (28,28)
@@ -132,8 +132,8 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
     
     elif dataset == 'Places365':
         from places365classes import places365_classes
-        testset = torchvision.datasets.Places365(root='./data', split='train-standard', 
-                                                  small= True, download= True)
+        testset = torchvision.datasets.Places365(root='./data', split='val', 
+                                                  small= True, download= False)
         classes = places365_classes
         image_size = (256,256)
         # Pick 30 samples randomly
