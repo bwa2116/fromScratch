@@ -1,4 +1,4 @@
-places365classes = (
+places365_classes = (
 'airfield ', 
 'airplane_cabin ', 
 'airport_terminal ', 
