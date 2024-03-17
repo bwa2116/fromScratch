@@ -73,7 +73,7 @@ def visualize_images(dataset):
 
     elif dataset == 'Places365':
         from places365classes import places365_classes
-        trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
+        trainset = torchvision.datasets.Places365(root='./data', split='train-challenge', 
                                                   small= True, download= True)
         classes = places365_classes
 
