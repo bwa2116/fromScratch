@@ -118,6 +118,8 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
     # testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
     #                                         shuffle=False, num_workers=num_workers)
 
+    testloader=1
+
     from places365classes import places365_classes
     classes = places365_classes
     return trainloader, testloader, classes
