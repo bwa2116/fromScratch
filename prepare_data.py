@@ -96,7 +96,7 @@ def prepare_Places365_data(batch_size=64, num_workers=2):
     trainset = torchvision.datasets.Places365(root='./data',
                                               # split='train-standard',
                                               split='val',
-                                              small= True, download= True)
+                                              small= True, transform = train_transform, download= True)
     
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
                                             shuffle=True, num_workers=num_workers)
@@ -107,7 +107,7 @@ def prepare_Places365_data(batch_size=64, num_workers=2):
     #     transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
     # testset = torchvision.datasets.Places365(root='./data', split='val', 
-    #                                               small= True, download= True)
+    #                                               small= True, transform = test_transform, download= True)
 
     # testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
     #                                         shuffle=False, num_workers=num_workers)
