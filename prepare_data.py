@@ -103,20 +103,20 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
                                             shuffle=True, num_workers=num_workers)
 
-    test_transform = transforms.Compose(
-        [transforms.ToTensor(),
-        transforms.Resize((256, 256)),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+    # test_transform = transforms.Compose(
+    #     [transforms.ToTensor(),
+    #     transforms.Resize((256, 256)),
+    #     transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
-    testset = torchvision.datasets.Places365(root='./data', split='val', 
-                                                  small= True, download= True)
-    if test_sample_size is not None:
-        # Randomly sample a subset of the test set
-        indices = torch.randperm(len(testset))[:test_sample_size]
-        testset = torch.utils.data.Subset(testset, indices)
+    # testset = torchvision.datasets.Places365(root='./data', split='val', 
+    #                                               small= True, download= True)
+    # if test_sample_size is not None:
+    #     # Randomly sample a subset of the test set
+    #     indices = torch.randperm(len(testset))[:test_sample_size]
+    #     testset = torch.utils.data.Subset(testset, indices)
 
-    testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                            shuffle=False, num_workers=num_workers)
+    # testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
+    #                                         shuffle=False, num_workers=num_workers)
 
     from places365classes import places365_classes
     classes = places365_classes
