@@ -49,7 +49,7 @@ config_Places365 = {
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
-    "image_size": 256, # image_size of Places365 - variable
+    "image_size": 64, # image_size of Places365 - variable
     "num_classes": 365, # num_classes of Places365
     "num_channels": 3, # num_channels of Places365 - color
     "qkv_bias": qkv_bias,
