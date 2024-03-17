@@ -99,7 +99,7 @@ def prepare_Places365_data(batch_size=64, num_workers=2):
                                               small= True, download= True)
     
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
-                                            shuffle=True)
+                                            shuffle=True, num_workers=num_workers)
 
     # test_transform = transforms.Compose(
     #     [transforms.ToTensor(),
