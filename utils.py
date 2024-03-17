@@ -135,7 +135,8 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         testset = torchvision.datasets.Places365(root='./data', split='val', 
                                                   small= True, download= True)
         classes = places365_classes
-        image_size = (256,256)
+        # image_size = (256,256)
+        image_size = (64,64)
         # Pick 30 samples randomly
         indices = torch.randperm(len(testset))[:num_images]
         raw_images = [np.asarray(testset[i][0]) for i in indices]
