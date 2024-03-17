@@ -85,7 +85,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
     return trainloader, testloader, classes
 
 
-def prepare_Places365_data(batch_size=64, num_workers=2):
+def prepare_Places365_data(batch_size=64, num_workers=2, train_sample_size=200, test_sample_size=50):
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
         transforms.Resize((256, 256)),
@@ -97,7 +97,12 @@ def prepare_Places365_data(batch_size=64, num_workers=2):
                                               split='train-standard',
                                               # split='val',
                                               small= True, transform = train_transform, download= True)
-    
+
+    if train_sample_size is not None:
+    # Randomly sample a subset of the training set
+    indices = torch.randperm(len(trainset))[:train_sample_size]
+    trainset = torch.utils.data.Subset(trainset, indices)
+            
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
                                             shuffle=True, num_workers=num_workers)
 
@@ -109,10 +114,14 @@ def prepare_Places365_data(batch_size=64, num_workers=2):
     testset = torchvision.datasets.Places365(root='./data', split='val', 
                                                   small= True, transform = test_transform, download= True)
 
+     if train_sample_size is not None:
+        # Randomly sample a subset of the training set
+        indices = torch.randperm(len(trainset))[:train_sample_size]
+        trainset = torch.utils.data.Subset(trainset, indices)
+
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
                                             shuffle=False, num_workers=num_workers)
 
-    testloader = 1
     from places365classes import places365_classes
     classes = places365_classes
     return trainloader, testloader, classes
