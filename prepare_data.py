@@ -95,7 +95,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2):
     
     trainset = torchvision.datasets.Places365(root='./data',
                                               # split='train-standard',
-                                              split='val'
+                                              split='val',
                                               small= True, download= True)
     
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
