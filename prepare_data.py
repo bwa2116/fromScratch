@@ -85,7 +85,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
     return trainloader, testloader, classes
 
 
-def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, test_sample_size=None):
+def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=200, test_sample_size=20):
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
         # transforms.Resize((256, 256)),
