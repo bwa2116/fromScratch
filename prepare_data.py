@@ -93,18 +93,18 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         transforms.RandomResizedCrop((256, 256), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
     
-    trainset = torchvision.datasets.Places365(root='./data', split='train-standard', 
+    trainset = torchvision.datasets.Places365(root='./data', split='val', 
                                                   small= True, download= True)
     if train_sample_size is not None:
         # Randomly sample a subset of the training set
         indices = torch.randperm(len(trainset))[:train_sample_size]
         trainset = torch.utils.data.Subset(trainset, indices)
-
     
-    print("before train loader")
+    for elem in trainset:
+        print(type(elem))
+        
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=batch_size,
                                             shuffle=True, num_workers=num_workers)
-    print("after train loader")
 
     test_transform = transforms.Compose(
         [transforms.ToTensor(),
@@ -118,12 +118,9 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=None, 
         indices = torch.randperm(len(testset))[:test_sample_size]
         testset = torch.utils.data.Subset(testset, indices)
 
-    print("before test loader")
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
                                             shuffle=False, num_workers=num_workers)
 
-    print("after test loader")
-    
     from places365classes import places365_classes
     classes = places365_classes
     return trainloader, testloader, classes
