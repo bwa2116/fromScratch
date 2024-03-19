@@ -77,6 +77,12 @@ def visualize_images(dataset):
                                                   small= True, download= True)
         classes = places365_classes
 
+    elif dataset == 'ImageNet':
+        from imagenetclasses import imagenet_classes
+        # trainset = torchvision.datasets.Places365(root='./data', split='val', 
+        #                                           small= True, download= True)
+        classes = imagenet_classes
+
     # Pick 30 samples randomly
     indices = torch.randperm(len(trainset))[:30]
     images = [np.asarray(trainset[i][0]) for i in indices]
@@ -136,6 +142,24 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
                                                   small= True, download= True)
         classes = places365_classes
         # image_size = (256,256)
+        image_size = (64,64)
+        # Pick 30 samples randomly
+        indices = torch.randperm(len(testset))[:num_images]
+        raw_images = [np.asarray(testset[i][0]) for i in indices]
+        labels = [testset[i][1] for i in indices]
+        # Convert the images to tensors
+        test_transform = transforms.Compose(
+        [transforms.ToTensor(),
+        transforms.Resize(image_size),
+        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+        images = torch.stack([test_transform(image) for image in raw_images])
+
+    elif dataset == 'ImageNet':
+        from imagenetclasses import imagenet_classes
+        # testset = torchvision.datasets.Places365(root='./data', split='val', 
+        #                                           small= True, download= True)
+        classes = imagenet_classes
+        # image_size = (224,224)
         image_size = (64,64)
         # Pick 30 samples randomly
         indices = torch.randperm(len(testset))[:num_images]
