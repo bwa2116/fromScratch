@@ -83,6 +83,8 @@ def visualize_images(dataset):
             download_tinyImg200('.')
         trainset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train')
 
+        classes=[]
+
     # Pick 30 samples randomly
     indices = torch.randperm(len(trainset))[:30]
     images = [np.asarray(trainset[i][0]) for i in indices]
@@ -154,11 +156,11 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
         images = torch.stack([test_transform(image) for image in raw_images])
 
-    elif dataset == 'ImageNet':
+    elif dataset == 'ImageNet200':
         # from imagenetclasses import imagenet_classes
         testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val')
         
-        # classes = imagenet_classes
+        classes = []
         # image_size = (224,224)
         image_size = (64,64)
         # Pick 30 samples randomly
