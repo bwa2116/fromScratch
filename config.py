@@ -55,7 +55,7 @@ config_Places365 = {
     "qkv_bias": qkv_bias,
 }
 
-config_ImageNet = {
+config_ImageNet200 = {
     "patch_size": patch_size,
     "hidden_size": hidden_size,
     "num_hidden_layers": num_hidden_layers,
@@ -65,7 +65,7 @@ config_ImageNet = {
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
     "image_size": 64, # image_size of ImageNet - variable - convention is 224 but CUDA memory
-    "num_classes": 1000, # num_classes of ImageNet
+    "num_classes": 200, # num_classes of ImageNet
     "num_channels": 3, # num_channels of ImageNet - color
     "qkv_bias": qkv_bias,
 }
