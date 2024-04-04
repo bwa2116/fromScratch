@@ -77,11 +77,11 @@ def visualize_images(dataset):
                                                   small= True, download= True)
         classes = places365_classes
 
-    elif dataset == 'ImageNet':
-        from imagenetclasses import imagenet_classes
-        # trainset = torchvision.datasets.Places365(root='./data', split='val', 
-        #                                           small= True, download= True)
-        classes = imagenet_classes
+    elif dataset == 'ImageNet200':
+        import os
+        if not os.path.exists('./tiny-imagenet-200/'):
+            download_tinyImg200('.')
+        trainset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train')
 
     # Pick 30 samples randomly
     indices = torch.randperm(len(trainset))[:30]
@@ -155,10 +155,10 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         images = torch.stack([test_transform(image) for image in raw_images])
 
     elif dataset == 'ImageNet':
-        from imagenetclasses import imagenet_classes
-        # testset = torchvision.datasets.Places365(root='./data', split='val', 
-        #                                           small= True, download= True)
-        classes = imagenet_classes
+        # from imagenetclasses import imagenet_classes
+        testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val')
+        
+        # classes = imagenet_classes
         # image_size = (224,224)
         image_size = (64,64)
         # Pick 30 samples randomly
