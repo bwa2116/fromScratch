@@ -2,7 +2,7 @@
 import torch
 import torchvision
 import torchvision.transforms as transforms
-
+import os
 
 def prepare_CIFAR10_data(batch_size=4, num_workers=2, train_sample_size=None, test_sample_size=None):
     train_transform = transforms.Compose(
