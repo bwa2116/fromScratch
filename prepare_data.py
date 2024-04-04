@@ -135,9 +135,9 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=100000
 
 def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None, test_sample_size=None):
 
-    # from tiny_img import download_tinyImg200
-    # if not os.path.exists('./tiny-imagenet-200/'):
-    #     download_tinyImg200('.')
+    from tiny_img import download_tinyImg200
+    if not os.path.exists('./tiny-imagenet-200/'):
+        download_tinyImg200('.')
     
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
@@ -164,7 +164,7 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None
         transforms.Resize((64, 64)),
         transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
-    testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val', transform=test_transforms)
+    testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val', transform=test_transform)
     
     if test_sample_size is not None:
         # Randomly sample a subset of the test set
