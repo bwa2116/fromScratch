@@ -133,8 +133,11 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=100000
 
 
 
-def prepare_ImageNet_data(batch_size=4, num_workers=2, train_sample_size=None, test_sample_size=None):
+def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None, test_sample_size=None):
 
+    from google.colab import drive
+    drive.mount('/content/drive')
+    
     train_transform = transforms.Compose(
         [transforms.ToTensor(),
         # transforms.Resize((256, 256)),
