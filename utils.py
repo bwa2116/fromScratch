@@ -94,7 +94,8 @@ def visualize_images(dataset):
     for i in range(30):
         ax = fig.add_subplot(6, 5, i+1, xticks=[], yticks=[])
         ax.imshow(images[i])
-        ax.set_title(classes[labels[i]])
+        # ax.set_title(classes[labels[i]])
+        ax.set_title(labels[i])
 
 
 @torch.no_grad()
