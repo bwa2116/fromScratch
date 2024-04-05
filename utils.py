@@ -83,7 +83,7 @@ def visualize_images(dataset):
             download_tinyImg200('.')
         trainset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train')
 
-        classes=[]
+        classes = set([trainset[i][1] for i in len(trainset)])
 
     # Pick 30 samples randomly
     indices = torch.randperm(len(trainset))[:30]
