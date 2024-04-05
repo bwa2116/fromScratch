@@ -174,5 +174,6 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
                                             shuffle=False, num_workers=num_workers)
 
-    classes = []
+    classes = list(set([trainset[i][1] for i in range(len(trainset))]))
+    
     return trainloader, testloader, classes
