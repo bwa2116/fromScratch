@@ -161,7 +161,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         # from imagenetclasses import imagenet_classes
         testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val')
         
-        classes = list(set([testset[i][1] for i in range(len(testset))]))
+        classes = [testset[i][1] for i in range(len(testset))]
         
         # image_size = (224,224)
         image_size = (64,64)
