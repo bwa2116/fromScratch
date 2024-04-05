@@ -79,6 +79,7 @@ def visualize_images(dataset):
 
     elif dataset == 'ImageNet200':
         import os
+        from tiny_image import download_tinyImg200
         if not os.path.exists('./tiny-imagenet-200/'):
             download_tinyImg200('.')
         trainset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train')
