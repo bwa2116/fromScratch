@@ -106,7 +106,7 @@ class ReLU_FAVOR_AttentionHead(nn.Module):
         return (attention_output, attention_probs)
 
 class SM_AP_RF_AttentionHead(nn.Module):
-    def __init__(self, hidden_size, input_size, num_random_features=32, dropout, bias=True):
+    def __init__(self, hidden_size, input_size, dropout, num_random_features=32, bias=True):
         super().__init__()
         self.hidden_size = hidden_size
         self.input_size = input_size
