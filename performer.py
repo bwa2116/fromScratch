@@ -72,11 +72,10 @@ class Embeddings(nn.Module):
         return x
 
 
-class AttentionHead(nn.Module):
+class tanh_AttentionHead(nn.Module):
     """
     A single attention head.
     This module is used in the MultiHeadAttention module.
-
     """
     def __init__(self, hidden_size, attention_head_size, dropout, bias=True):
         super().__init__()
@@ -98,9 +97,9 @@ class AttentionHead(nn.Module):
         key = self.key(x)
         value = self.value(x)
         # Calculate the attention scores
-        # softmax(Q*K.T/sqrt(head_size))*V
+        # favor+ attention: tanh(Q*K.T)*V
         attention_scores = torch.matmul(query, key.transpose(-1, -2))
-        attention_scores = attention_scores / math.sqrt(self.attention_head_size)
+        attention_scores = torch.tanh(attention_scores)
         attention_probs = nn.functional.softmax(attention_scores, dim=-1)
         attention_probs = self.dropout(attention_probs)
         # Calculate the attention output
@@ -126,7 +125,7 @@ class MultiHeadAttention(nn.Module):
         # Create a list of attention heads
         self.heads = nn.ModuleList([])
         for _ in range(self.num_attention_heads):
-            head = AttentionHead(
+            head = tanh_AttentionHead(
                 self.hidden_size,
                 self.attention_head_size,
                 config["attention_probs_dropout_prob"],
