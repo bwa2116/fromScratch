@@ -1,8 +1,8 @@
-patch_size = 4
+patch_size = 8
 
-hidden_size = 48
-num_hidden_layers = 4
-num_attention_heads = 4
+hidden_size = 128
+num_hidden_layers = 6
+num_attention_heads = 8
 
 hidden_dropout_prob = 0.0
 attention_probs_dropout_prob = 0.0
