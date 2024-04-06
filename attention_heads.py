@@ -106,15 +106,6 @@ class ReLU_FAVOR_AttentionHead(nn.Module):
         return (attention_output, attention_probs)
 
 class SM_AP_RF_AttentionHead(nn.Module):
-import torch
-import torch.nn as nn
-import math
-
-class AttentionHead(nn.Module):
-    """
-    A single attention head.
-    This module is used in the MultiHeadAttention module.
-    """
     def __init__(self, hidden_size, input_size, num_random_features=32, dropout, bias=True):
         super().__init__()
         self.hidden_size = hidden_size
