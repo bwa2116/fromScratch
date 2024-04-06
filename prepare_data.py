@@ -146,7 +146,7 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None
         transforms.RandomHorizontalFlip(p=0.5),
         # transforms.RandomResizedCrop((224, 224), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
         transforms.RandomResizedCrop((64, 64), scale=(0.8, 1.0), ratio=(0.75, 1.3333333333333333), interpolation=2),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
 
     trainset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train', transform=train_transform)
     
@@ -162,7 +162,7 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2, train_sample_size=None
         [transforms.ToTensor(),
         # transforms.Resize((224, 224)),
         transforms.Resize((64, 64)),
-        transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+        transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))])
 
     testset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val', transform=test_transform)
     
