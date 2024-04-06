@@ -92,7 +92,7 @@ class MultiHeadAttention(nn.Module):
         # Create a list of attention heads
         self.heads = nn.ModuleList([])
         for _ in range(self.num_attention_heads):
-            head = tanh_AttentionHead(
+            head = tanh_FAVOR_AttentionHead(
                 self.hidden_size,
                 self.attention_head_size,
                 config["attention_probs_dropout_prob"],
@@ -259,7 +259,7 @@ class Encoder(nn.Module):
             return (x, all_attentions)
 
 
-class FAVOR_ViTForClassfication(nn.Module):
+class ViTForClassfication(nn.Module):
     """
     The FAVOR+ ViT model for classification.
     """
