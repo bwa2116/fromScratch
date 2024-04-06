@@ -292,9 +292,9 @@ class Encoder(nn.Module):
             return (x, all_attentions)
 
 
-class ViTForClassfication(nn.Module):
+class FAVOR_ViTForClassfication(nn.Module):
     """
-    The ViT model for classification.
+    The FAVOR+ ViT model for classification.
     """
 
     def __init__(self, config):
