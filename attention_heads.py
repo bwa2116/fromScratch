@@ -110,20 +110,19 @@ class SM_AP_RF_AttentionHead(nn.Module):
     A single attention head.
     This module is used in the MultiHeadAttention module.
     """
-    def __init__(self, hidden_size, attention_head_size, num_random_features=32, dropout=0.1, bias=True):
+    def __init__(self, hidden_size, attention_head_size, dropout, bias=True):
         super().__init__()
         self.hidden_size = hidden_size
         self.attention_head_size = attention_head_size
-        self.num_random_features = num_random_features
         
         # Initialize random feature matrix for approximate softmax
-        self.random_features = nn.Parameter(torch.randn(num_random_features, attention_head_size) / math.sqrt(attention_head_size))
+        self.random_features = nn.Parameter(torch.randn(32, attention_head_size) / math.sqrt(attention_head_size))
         
         # Create the query, key, and value projection layers
         self.query = nn.Linear(hidden_size, attention_head_size, bias=bias)
         self.key = nn.Linear(hidden_size, attention_head_size, bias=bias)
         self.value = nn.Linear(hidden_size, attention_head_size, bias=bias)
-
+    
         self.dropout = nn.Dropout(dropout)
     
     def forward(self, x):
@@ -147,6 +146,10 @@ class SM_AP_RF_AttentionHead(nn.Module):
         # Apply softmax to obtain attention probabilities
         attention_probs = nn.functional.softmax(attention_scores, dim=-1)
         attention_probs = self.dropout(attention_probs)
+        
+        # Calculate the attention output
+        attention_output = torch.matmul(attention_probs, value)
+        return (attention_output, attention_probs)
         
         # Calculate the attention output
         attention_output = torch.matmul(attention_probs, value)
