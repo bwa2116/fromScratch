@@ -92,7 +92,7 @@ class MultiHeadAttention(nn.Module):
         # Create a list of attention heads
         self.heads = nn.ModuleList([])
         for _ in range(self.num_attention_heads):
-            head = tanh_FAVOR_AttentionHead(
+            head = ReLU_FAVOR_AttentionHead(
                 self.hidden_size,
                 self.attention_head_size,
                 config["attention_probs_dropout_prob"],
