@@ -94,6 +94,7 @@ class MultiHeadAttention(nn.Module):
         for _ in range(self.num_attention_heads):
             head = SM_AP_RF_AttentionHead(
                 self.hidden_size,
+                self.num_random_features, #erase
                 self.attention_head_size,
                 config["attention_probs_dropout_prob"],
                 self.qkv_bias
