@@ -1,9 +1,25 @@
 #This is copied from https://raw.githubusercontent.com/yandexdataschool/Practical_DL/spring2019/week03_convnets/tiny_img.py
 
 import numpy as np
+from sklearn.model_selection import train_test_split
 import os, sys
-from random import shuffle
-from math import floor
+if sys.version_info[0] == 2:
+    from urllib import urlretrieve
+    import cPickle as pickle
+
+else:
+    from urllib.request import urlretrieve
+    import pickle
+
+def unpickle(file):
+    fo = open(file, 'rb')
+    if sys.version_info[0] == 2:
+        dict = pickle.load(fo)
+    else:
+        dict = pickle.load(fo,encoding='latin1')
+    
+    fo.close()
+    return dict
 
 def download_tinyImg200(path,
                      url='http://cs231n.stanford.edu/tiny-imagenet-200.zip',
@@ -17,120 +33,66 @@ def download_tinyImg200(path,
     zip_ref.extractall()
     zip_ref.close()
     
-def unzip_data():
-	path_to_zip_file = "%s/tiny-imagenet-200.zip" % os.getcwd()
-	directory_to_extract_to = os.getcwd()
-	print("Extracting zip file: %s" % path_to_zip_file)
-	with zipfile.ZipFile(path_to_zip_file, 'r') as zip_ref:
-		zip_ref.extractall(directory_to_extract_to)
-	print("Extracted at: %s" % directory_to_extract_to)
     
-def format_val():
-	val_dir = "%s/tiny-imagenet-200/val" % os.getcwd()
-	print("Formatting: %s" % val_dir)
-	val_annotations = "%s/val_annotations.txt" % val_dir
-	val_dict = {}
-	with open(val_annotations, 'r') as f:
-		for line in f:
-			line = line.strip().split()
-			assert(len(line) == 6)
-			wnind = line[1]
-			img_name = line[0]
-			boxes = '\t'.join(line[2:])
-			if wnind not in val_dict:
-				val_dict[wnind] = []
-			entries = val_dict[wnind]
-			entries.append((img_name, boxes))
-	assert(len(val_dict) == 200)
-	for wnind, entries in val_dict.items():
-		val_wnind_dir = "%s/%s" % (val_dir, wnind)
-		val_images_dir = "%s/images" % val_dir
-		val_wnind_images_dir = "%s/images" % val_wnind_dir
-		os.mkdir(val_wnind_dir)
-		os.mkdir(val_wnind_images_dir)
-		wnind_boxes = "%s/%s_boxes.txt" % (val_wnind_dir, wnind)
-		f = open(wnind_boxes, "w")
-		for img_name, box in entries:
-			source = "%s/%s" % (val_images_dir, img_name)
-			dst = "%s/%s" % (val_wnind_images_dir, img_name)
-			os.system("cp %s %s" % (source, dst))
-			f.write("%s\t%s\n" % (img_name, box))
-		f.close()
-	os.system("rm -rf %s" % val_images_dir)
-	print("Cleaning up: %s" % val_images_dir)
-	print("Formatting val done")
+from PIL import Image
 
-def split_train_test():
-	split_quota = 0.7
-	print("Splitting Train+Val into %s-%s" % (split_quota*100, (1 - split_quota)*100))
-	base_dir = "%s/tiny-imagenet-200" % os.getcwd()
-	train_dir = "%s/train" % base_dir
-	val_dir = "%s/val" % base_dir
-	fwnind = "%s/wnids.txt" % base_dir
-	wninds = set()
-	with open(fwnind, "r") as f:
-		for wnind in f:
-			wninds.add(wnind.strip())
-	assert(len(wninds) == 200)
-	new_train_dir = "%s/new_train" % base_dir
-	new_test_dir = "%s/new_test" % base_dir
-	os.mkdir(new_train_dir)
-	os.mkdir(new_test_dir)
-	total_ntrain = 0
-	total_ntest = 0
-	for wnind in wninds:
-		wnind_ntrain = 0
-		wnind_ntest = 0
-		new_train_wnind_dir = "%s/%s" % (new_train_dir, wnind)
-		new_test_wnind_dir = "%s/%s" % (new_test_dir, wnind)
-		os.mkdir(new_train_wnind_dir)
-		os.mkdir(new_test_wnind_dir)
-		os.mkdir(new_train_wnind_dir+"/images")
-		os.mkdir(new_test_wnind_dir+"/images")
-		new_train_wnind_boxes = "%s/%s_boxes.txt" % (new_train_wnind_dir, wnind)
-		f_ntrain = open(new_train_wnind_boxes, "w")
-		new_test_wnind_boxes = "%s/%s_boxes.txt" % (new_test_wnind_dir, wnind)
-		f_ntest = open(new_test_wnind_boxes, "w")
-		dirs = [train_dir, val_dir]
-		for wdir in dirs:
-			wnind_dir = "%s/%s" % (wdir, wnind)
-			wnind_boxes = "%s/%s_boxes.txt" % (wnind_dir, wnind)
-			imgs = []
-			with open(wnind_boxes, "r") as f:
-				for line in f:
-					line = line.strip().split()
-					img_name = line[0]
-					boxes = '\t'.join(line[1:])
-					imgs.append((img_name, boxes))
-			print("[Old] wind: %s - #: %s" % (wnind, len(imgs)))
-			shuffle(imgs)
-			split_n = floor(len(imgs)*0.7)
-			train_imgs = imgs[:split_n]
-			test_imgs = imgs[split_n:]
-			for img_name, box in train_imgs:
-				source = "%s/images/%s" % (wnind_dir, img_name)
-				dst = "%s/images/%s" % (new_train_wnind_dir, img_name)
-				os.system("cp %s %s" % (source, dst))
-				f_ntrain.write("%s\t%s\n" % (img_name, box))
-				wnind_ntrain += 1
-			for img_name, box in test_imgs:
-				source = "%s/images/%s" % (wnind_dir, img_name)
-				dst = "%s/images/%s" % (new_test_wnind_dir, img_name)
-				os.system("cp %s %s" % (source, dst))
-				f_ntest.write("%s\t%s\n" % (img_name, box))
-				wnind_ntest += 1
-		f_ntrain.close()
-		f_ntest.close()
-		print("[New] wnind: %s - #train: %s - #test: %s" % (wnind, wnind_ntrain,
-															wnind_ntest))
-		total_ntrain += wnind_ntrain
-		total_ntest += wnind_ntest
-	print("[New] #train: %s - #test: %s" % (total_ntrain, total_ntest))
-	os.system("rm -rf %s" % train_dir)
-	os.system("rm -rf %s" % val_dir)
-	print("Cleaning up: %s" % train_dir)
-	print("Cleaning up: %s" % val_dir)
-	print("Created new train data at: %s" % new_train_dir)
-	print("Cleaning new test data at: %s" % new_test_dir)
-	print("Splitting dataset done")
+def read_folder(folder_path):
+    print (folder_path)
+    list_of_pics = [Image.open(os.path.join(folder_path, filename)).getdata() for filename in os.listdir(folder_path) if np.array(Image.open(os.path.join(folder_path, filename)).getdata()).shape == (4096, 3)]
+    return np.array(list_of_pics).reshape(np.array(list_of_pics).shape[0], 3, 64, 64)
+
+def load_tiny_image(data_path=".", channels_last=False, test_size=0.3, random_state=1337):
+    data_path = '.'
+    full_data_path = os.path.join(data_path, "tiny-imagenet-200/")
     
+    if not os.path.exists(full_data_path):
+        print ("Dataset not found. Downloading...")
+        print (data_path)
+        download_tinyImg200(data_path)
+        
+    list_of_folders = open(os.path.join(full_data_path, "wnids.txt"), 'r')
+    folder_names = [line.split() for line in list_of_folders.readlines()]
+    data_paths = [os.path.join(data_path, "tiny-imagenet-200/train/" + elem[0] + "/images") for elem in folder_names]
+
+
+    X_list = [read_folder(path) for path in data_paths]  
+    X = np.concatenate(X_list).reshape([-1,3,64,64]).astype('float32')/255
+    y_list = []
+
+    for class_label in np.arange(len(data_paths)):
+        print (len(X_list[class_label]))
+        y_list.append(np.full((len(X_list[class_label]),), class_label))
+
+    y = np.concatenate(y_list).astype('int32')
+    
+    X_train,X_test,y_train,y_test = train_test_split(X,y,
+                                                   test_size=test_size,
+                                                   random_state=random_state)
+    
+    X_test, X_val, y_test, y_val = train_test_split(X_test, y_test,
+                                                   test_size=test_size,
+                                                   random_state=random_state)
+    
+    print ("shapes: ", X_train.shape, y_train.shape, X_test.shape, y_test.shape, X_val.shape, y_val.shape )
+
+    return X_train,y_train,X_val,y_val,X_test,y_test
+
+
+def look_at_class(data, labels):
+    class_n = random.randint(1,200)
+    idxs = []
+    print ("class ", class_n)
+    for ind, label in enumerate(labels):
+        if label == class_n:
+            idxs.append(ind)
+            
+    data_for_show = data[idxs]
+    for i in range(4):
+        plt.subplot(2,2,i+1)
+        plt.imshow(data_for_show[i].reshape(64,64,3))
+    
+
+def look_up_same_classes(data, labels, number_of_classes = 4):
+    for i in range(number_of_classes):
+        look_at_class(data, labels)
+    return 0
