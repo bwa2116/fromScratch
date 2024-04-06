@@ -1,4 +1,4 @@
-patch_size = 8
+patch_size = 4
 
 hidden_size = 128
 num_hidden_layers = 6
