@@ -83,9 +83,9 @@ class AttentionHead(nn.Module):
         self.random_features = nn.Parameter(torch.randn(num_random_features, attention_head_size) / math.sqrt(attention_head_size))
         
         # Create the query, key, and value projection layers
-        self.query = nn.Linear(hidden_size, input_size, bias=bias)
-        self.key = nn.Linear(hidden_size, input_size, bias=bias)
-        self.value = nn.Linear(hidden_size, input_size, bias=bias)
+        self.query = nn.Linear(hidden_size, attention_head_size, bias=bias)
+        self.key = nn.Linear(hidden_size, attention_head_size, bias=bias)
+        self.value = nn.Linear(hidden_size, attention_head_size, bias=bias)
     
         self.dropout = nn.Dropout(dropout)
     
