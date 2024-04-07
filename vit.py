@@ -98,10 +98,15 @@ class AttentionHead(nn.Module):
         key = self.key(x)
         value = self.value(x)
         # Calculate the attention scores
-        # softmax(Q*K.T/sqrt(head_size))*V
         attention_scores = torch.matmul(query, key.transpose(-1, -2))
         attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-        attention_probs = nn.functional.softmax(attention_scores, dim=-1)
+        
+        # # softmax(Q*K.T/sqrt(head_size))*V
+        # attention_probs = nn.functional.softmax(attention_scores, dim=-1)
+        
+        # relu(Q*K.T/sqrt(head_size))*V
+        attention_probs = nn.functional.relu(attention_scores)
+        
         attention_probs = self.dropout(attention_probs)
         # Calculate the attention output
         attention_output = torch.matmul(attention_probs, value)
