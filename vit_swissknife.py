@@ -73,14 +73,14 @@ class Embeddings(nn.Module):
 
 
 class AttentionHead(nn.Module):
-    def __init__(self, hidden_size, input_size, dropout, num_random_features=32, bias=True):
+    def __init__(self, hidden_size, attention_head_size, dropout, num_random_features=32, bias=True):
         super().__init__()
         self.hidden_size = hidden_size
-        self.input_size = input_size
+        self.attention_head_size = attention_head_size
         self.num_random_features = num_random_features
         
         # Initialize random feature matrix for approximate softmax
-        self.random_features = nn.Parameter(torch.randn(num_random_features, input_size) / math.sqrt(input_size))
+        self.random_features = nn.Parameter(torch.randn(num_random_features, attention_head_size) / math.sqrt(attention_head_size))
         
         # Create the query, key, and value projection layers
         self.query = nn.Linear(hidden_size, input_size, bias=bias)
@@ -105,7 +105,7 @@ class AttentionHead(nn.Module):
         
         # Compute attention scores
         attention_scores = torch.matmul(query_random_features, key_random_features.transpose(-1, -2))
-        attention_scores = attention_scores / math.sqrt(self.input_size)
+        attention_scores = attention_scores / math.sqrt(self.attention_head_size)
         
         # Apply softmax to obtain attention probabilities
         attention_probs = nn.functional.softmax(attention_scores, dim=-1)
