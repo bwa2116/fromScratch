@@ -86,17 +86,20 @@ class MultiHeadAttention(nn.Module):
         self.hidden_size = config["hidden_size"]
         self.num_attention_heads = config["num_attention_heads"]
         # The attention head size is the hidden size divided by the number of attention heads
-        self.attention_head_size = self.hidden_size // self.num_attention_heads
+        # self.attention_head_size = self.hidden_size // self.num_attention_heads
+        self.input_size = self.hidden_size // self.num_attention_heads
         self.all_head_size = self.num_attention_heads * self.attention_head_size
         # Whether or not to use bias in the query, key, and value projection layers
         self.qkv_bias = config["qkv_bias"]
         # Create a list of attention heads
         self.heads = nn.ModuleList([])
         for _ in range(self.num_attention_heads):
-            head = AttentionHead(
+            head = PerfSM_AttentionHead(
                 self.hidden_size,
-                self.attention_head_size,
+                # self.attention_head_size,
+                self.input_size,
                 config["attention_probs_dropout_prob"],
+                num_random_features=32,
                 self.qkv_bias
             )
             self.heads.append(head)
