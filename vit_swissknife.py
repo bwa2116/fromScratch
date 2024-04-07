@@ -138,6 +138,7 @@ class MultiHeadAttention(nn.Module):
                 self.hidden_size,
                 self.attention_head_size,
                 config["attention_probs_dropout_prob"],
+                32, 
                 self.qkv_bias
             )
             self.heads.append(head)
