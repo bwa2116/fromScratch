@@ -73,7 +73,7 @@ class Embeddings(nn.Module):
         return x
 
 
-from attention_heads import AttentionHead, tanh_FAVOR_AttentionHead, ReLU_FAVOR_AttentionHead, SM_AP_RF_AttentionHead
+from attention_heads import TransSM_AttentionHead, TransReLU_AttentionHead, PerfSM_AttentionHead
 
 class MultiHeadAttention(nn.Module):
     """
