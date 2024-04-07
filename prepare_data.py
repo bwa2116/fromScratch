@@ -149,7 +149,7 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2):
     # transforms.Normalize((0.4914, 0.4822, 0.4465), (0.2023, 0.1994, 0.2010))
     ])
     
-    dataset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train', transform=train_transform)
+    train_dataset = torchvision.datasets.ImageFolder('tiny-imagenet-200/train', transform=train_transform)
 
     test_transform = transforms.Compose(
     [transforms.ToTensor()#,
@@ -160,8 +160,8 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2):
     
     test_dataset = torchvision.datasets.ImageFolder('tiny-imagenet-200/val', transform=test_transform)
     
-    train_dataset, val_dataset = torch.utils.data.random_split(dataset, [80000, 20000])
-    test_dataset, val_dataset = torch.utils.data.random_split(val_dataset, [10000, 10000])
+    # train_dataset, val_dataset = torch.utils.data.random_split(dataset, [80000, 20000])
+    # test_dataset, val_dataset = torch.utils.data.random_split(val_dataset, [10000, 10000])
 
     trainloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,
                                             shuffle=True, num_workers=num_workers)
