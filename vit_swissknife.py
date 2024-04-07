@@ -100,8 +100,8 @@ class AttentionHead(nn.Module):
         
         # Calculate the attention scores using random features approximation
         # Compute random features for query and key
-        query_random_features = torch.matmul(query, self.random_features[:self.num_random_features])
-        key_random_features = torch.matmul(key, self.random_features[:self.num_random_features])
+        query_random_features = torch.matmul(query, self.random_features[self.num_random_features:])
+        key_random_features = torch.matmul(key, self.random_features[self.num_random_features:])
         
         # Compute attention scores
         attention_scores = torch.matmul(query_random_features, key_random_features.transpose(-1, -2))
