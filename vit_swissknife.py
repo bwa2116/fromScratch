@@ -85,6 +85,7 @@ class MultiHeadAttention(nn.Module):
         super().__init__()
         self.hidden_size = config["hidden_size"]
         self.num_attention_heads = config["num_attention_heads"]
+        self.num_random_features=32,
         # The attention head size is the hidden size divided by the number of attention heads
         # self.attention_head_size = self.hidden_size // self.num_attention_heads
         self.input_size = self.hidden_size // self.num_attention_heads
@@ -99,7 +100,7 @@ class MultiHeadAttention(nn.Module):
                 # self.attention_head_size,
                 self.input_size,
                 config["attention_probs_dropout_prob"],
-                num_random_features=32,
+                 self.num_random_features,
                 self.qkv_bias
             )
             self.heads.append(head)
