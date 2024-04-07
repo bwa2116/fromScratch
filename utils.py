@@ -164,7 +164,7 @@ def visualize_attention(model, dataset, output=None, device="cuda"):
         classes = list(range(0, 200))
         
         # image_size = (224,224)
-        image_size = (32,32)
+        image_size = (64,64)
         # Pick 30 samples randomly
         indices = torch.randperm(len(testset))[:num_images]
         raw_images = [np.asarray(testset[i][0]) for i in indices]
