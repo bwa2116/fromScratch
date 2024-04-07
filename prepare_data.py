@@ -37,7 +37,7 @@ def prepare_CIFAR10_data(batch_size=4, num_workers=2, train_sample_size=None, te
         testset = torch.utils.data.Subset(testset, indices)
 
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                            shuffle=False, num_workers=num_workers)
+                                            shuffle=True, num_workers=num_workers)
 
     classes = ('plane', 'car', 'bird', 'cat',
             'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
@@ -78,7 +78,7 @@ def prepare_MNIST_data(batch_size=4, num_workers=2, train_sample_size=None, test
         testset = torch.utils.data.Subset(testset, indices)
 
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                            shuffle=False, num_workers=num_workers)
+                                            shuffle=True, num_workers=num_workers)
 
     classes = ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9')
     
@@ -124,7 +124,7 @@ def prepare_Places365_data(batch_size=4, num_workers=2, train_sample_size=100000
         testset = torch.utils.data.Subset(testset, indices)
 
     testloader = torch.utils.data.DataLoader(testset, batch_size=batch_size,
-                                            shuffle=False, num_workers=num_workers)
+                                            shuffle=True, num_workers=num_workers)
 
     from places365classes import places365_classes
     classes = places365_classes
@@ -167,7 +167,7 @@ def prepare_ImageNet200_data(batch_size=4, num_workers=2):
                                             shuffle=True, num_workers=num_workers)
 
     testloader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,
-                                            shuffle=False, num_workers=num_workers)
+                                            shuffle=True, num_workers=num_workers)
     
 
     classes = list(range(0, 200))
