@@ -73,7 +73,7 @@ class Embeddings(nn.Module):
 
 
 class AttentionHead(nn.Module):
-  def __init__(self, hidden_size, input_size, dropout, num_random_features=32, bias=True):
+    def __init__(self, hidden_size, input_size, dropout, num_random_features=32, bias=True):
         super().__init__()
         self.hidden_size = hidden_size
         self.input_size = input_size
@@ -86,7 +86,7 @@ class AttentionHead(nn.Module):
         self.query = nn.Linear(hidden_size, input_size, bias=bias)
         self.key = nn.Linear(hidden_size, input_size, bias=bias)
         self.value = nn.Linear(hidden_size, input_size, bias=bias)
-
+    
         self.dropout = nn.Dropout(dropout)
     
     def forward(self, x):
