@@ -64,7 +64,7 @@ config_ImageNet200 = {
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
-    "image_size": 64, # image_size of ImageNet - variable - convention is 224 but CUDA memory
+    "image_size": 32, # image_size of ImageNet - variable - convention is 224 but CUDA memory
     "num_classes": 200, # num_classes of ImageNet
     "num_channels": 3, # num_channels of ImageNet - color
     "qkv_bias": qkv_bias,
