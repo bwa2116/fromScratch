@@ -1,6 +1,5 @@
 patch_size = 4
 
-hidden_size = 128
 num_hidden_layers = 6
 num_attention_heads = 8
 
@@ -12,7 +11,7 @@ qkv_bias = True
 
 config_CIFAR10 = {
     "patch_size": patch_size,
-    "hidden_size": hidden_size,
+    "hidden_size": (32**2)/patch_size,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
     "intermediate_size": 4 * hidden_size,
@@ -27,7 +26,7 @@ config_CIFAR10 = {
 
 config_MNIST = {
     "patch_size": patch_size,
-    "hidden_size": hidden_size,
+    "hidden_size": (28**2)/patch_size,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
     "intermediate_size": 4 * hidden_size,
@@ -42,7 +41,7 @@ config_MNIST = {
 
 config_Places365 = {
     "patch_size": patch_size,
-    "hidden_size": hidden_size,
+    "hidden_size": (64**2)/patch_size,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
     "intermediate_size": 4 * hidden_size,
@@ -57,7 +56,7 @@ config_Places365 = {
 
 config_ImageNet200 = {
     "patch_size": patch_size,
-    "hidden_size": hidden_size,
+    "hidden_size": (32**2)/patch_size,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
     "intermediate_size": 4 * hidden_size,
