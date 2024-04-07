@@ -1,6 +1,6 @@
 patch_size = 4
 
-num_hidden_layers = 6
+num_hidden_layers = 4
 num_attention_heads = 8
 
 hidden_dropout_prob = 0.0
@@ -11,10 +11,10 @@ qkv_bias = True
 
 config_CIFAR10 = {
     "patch_size": patch_size,
-    "hidden_size": (32**2)/patch_size,
+    "hidden_size": 48,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
-    "intermediate_size": 4 * (32**2)/patch_size,
+    "intermediate_size": 4 * 48,
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
@@ -26,10 +26,10 @@ config_CIFAR10 = {
 
 config_MNIST = {
     "patch_size": patch_size,
-    "hidden_size": (28**2)/patch_size,
+    "hidden_size": 48,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
-    "intermediate_size": 4 * (28**2)/patch_size,
+    "intermediate_size": 4 * 48,
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
@@ -41,10 +41,10 @@ config_MNIST = {
 
 config_Places365 = {
     "patch_size": patch_size,
-    "hidden_size": (64**2)/patch_size,
+    "hidden_size": 48,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
-    "intermediate_size": 4 * (64**2)/patch_size,
+    "intermediate_size": 4 * 48,
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
@@ -56,10 +56,10 @@ config_Places365 = {
 
 config_ImageNet200 = {
     "patch_size": patch_size,
-    "hidden_size": (64**2)/patch_size,
+    "hidden_size": 48,
     "num_hidden_layers": num_hidden_layers,
     "num_attention_heads": num_attention_heads,
-    "intermediate_size": 4 * (64**2)/patch_size,
+    "intermediate_size": 4 * 48,
     "hidden_dropout_prob": hidden_dropout_prob,
     "attention_probs_dropout_prob": attention_probs_dropout_prob,
     "initializer_range": initializer_range,
